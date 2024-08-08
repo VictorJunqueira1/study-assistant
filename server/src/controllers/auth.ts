@@ -3,8 +3,15 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import User, { IUser } from "../models/userModel";
 
+const getTimeUntilMidnight = (): number => {
+    const now = new Date();
+    const midnight = new Date(now);
+    midnight.setHours(24, 0, 0, 0);
+    return midnight.getTime() - now.getTime(); 
+};
+
 export const Authenticate = async (req: Request, res: Response): Promise<void> => {
-    const {username, password} = req.body;
+    const { username, password } = req.body;
 
     try {
         const user: IUser | null = await User.findOne({ username });
@@ -17,11 +24,13 @@ export const Authenticate = async (req: Request, res: Response): Promise<void> =
             res.status(401).send('Invalid credentials');
             return;
         }
-        const token = jwt.sign({ username: user.username }, 'AASHJDGAJSHGD1273', { expiresIn: '6h' });
+
+        const expiresIn = getTimeUntilMidnight(); 
+        const token = jwt.sign({ username: user.username }, 'B7B7B7B7B7B7B7', { expiresIn });
         res.cookie('token', token, { httpOnly: true });
         res.send('Logged in successfully');
 
-    } catch(error) {
+    } catch (error) {
         res.status(500).send('Internal server error');
         console.log(error);
     }

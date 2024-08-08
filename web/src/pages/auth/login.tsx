@@ -15,6 +15,15 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
+import axios from 'axios'
+import { useState } from "react";
+import { useRouter } from 'next/navigation';
+
+const axiosInstance = axios.create({
+  withCredentials: true,
+  baseURL: "http://localhost:8000"
+})
+
 const formSchema = z.object({
   username: z.string().min(2, {
     message: "Este campo é obrigatório."
@@ -37,6 +46,11 @@ const Login = () => {
     },
   })
 
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const router = useRouter();
+
   const getCurrentGreeting = () => {
     const currentHour = new Date().getHours()
     if (currentHour < 12) {
@@ -48,8 +62,31 @@ const Login = () => {
     }
   }
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setLoading(true);
+    setError(null);
+    setSuccess(null);
+
+    try {
+      const response = await axiosInstance.post('/auth', values, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      setSuccess('Login bem-sucedido!');
+      console.log('Resposta do servidor:', response.data);
+      router.push('/'); 
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        setError(`Erro ao fazer login: ${error.response.data.message || error.message}`);
+        console.error('Erro de resposta:', error.response.data);
+      } else {
+        setError('Erro desconhecido.');
+        console.error('Erro:', error);
+      }
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -58,7 +95,7 @@ const Login = () => {
         <div className="max-w-7xl min-h-screen mx-auto flex items-center justify-center">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="w-full max-w-xs">
-              <h1 className="mb-6 text-4xl font-bold text-center"> {getCurrentGreeting()}</h1>
+              <h1 className="mb-6 text-4xl font-bold text-center">{getCurrentGreeting()}</h1>
               <div className="space-y-3">
                 <FormField
                   control={form.control}
@@ -87,13 +124,17 @@ const Login = () => {
                   )}
                 />
               </div>
-              <Button type="submit" variant={"loginButton"} className="py-5">Entrar</Button>
+              <Button type="submit" variant={"loginButton"} className="py-5">
+                {loading ? 'Entrando...' : 'Entrar'}
+              </Button>
+              {error && <p className="text-red-500 mt-4">{error}</p>}
+              {success && <p className="text-green-500 mt-4">{success}</p>}
             </form>
           </Form>
         </div>
       </div>
     </>
-  );
+  )
 }
 
 export default Login;
