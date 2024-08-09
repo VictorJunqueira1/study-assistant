@@ -2,6 +2,12 @@ import React, { useState } from 'react';
 import "@/app/globals.css";
 import Link from 'next/link';
 import { CornerDownLeft } from 'lucide-react';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 
 const Math = () => {
   const [notes, setNotes] = useState<string>('');
@@ -33,27 +39,33 @@ const Math = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="mb-8">
             <h2 className="text-xl md:text-3xl font-semibold mb-4">Tópicos de Matemática</h2>
-            {topics.map((topic, index) => (
-              <details key={index} className="mb-4 ml-0 md:ml-5">
-                <summary className="text-lg md:text-2xl font-semibold cursor-pointer">{topic.category}</summary>
-                <ul className="mt-2 list-disc list-inside space-y-2">
-                  {topic.details.map((item, i) => (
-                    <li key={i} className="flex items-center space-x-2 ml-4">
-                      <input
-                        type="checkbox"
-                        id={`checkbox-${index}-${i}`}
-                        className="w-5 h-5 accent-blue-500"
-                      />
-                      <label
-                        htmlFor={`checkbox-${index}-${i}`}
-                      >
-                        {item}
-                      </label>
-                    </li>
-                  ))}
-                </ul>
-              </details>
-            ))}
+            <Accordion type="single" collapsible>
+              {topics.map((topic, index) => (
+                <AccordionItem key={index} value={`topic-${index}`}>
+                  <AccordionTrigger className="text-lg md:text-2xl font-semibold cursor-pointer">
+                    {topic.category}
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <ul className="mt-2 list-disc list-inside space-y-2">
+                      {topic.details.map((item, i) => (
+                        <li key={i} className="flex items-center space-x-2 ml-4">
+                          <input
+                            type="checkbox"
+                            id={`checkbox-${index}-${i}`}
+                            className="w-5 h-5 accent-blue-500"
+                          />
+                          <label
+                            htmlFor={`checkbox-${index}-${i}`}
+                          >
+                            {item}
+                          </label>
+                        </li>
+                      ))}
+                    </ul>
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </div>
           <div className="mb-8">
             <h2 className="text-2xl md:text-3xl font-semibold mb-4">Links</h2>
