@@ -2,7 +2,7 @@ import express, { NextFunction, Request, Response } from 'express';
 import cors from 'cors';
 import connectDB from './config/config';
 import { Authenticate } from './controllers/auth';
-import cookieParser, { CookieParseOptions } from "cookie-parser"
+import cookieParser from "cookie-parser"
 
 const app = express();
 
@@ -35,7 +35,7 @@ const Guard = (req: Request, res: Response, next: NextFunction) => {
     }
 };
 
-app.use('/ping', Guard, (req, res) => {
+app.use('/ping', Guard, (req: Request, res: Response) => {
     return res.status(200).json({
         message: "Connected!"
     })

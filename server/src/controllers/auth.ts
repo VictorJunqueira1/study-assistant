@@ -12,9 +12,10 @@ const getTimeUntilMidnight = (): number => {
 
 export const Authenticate = async (req: Request, res: Response): Promise<void> => {
     const { username, password } = req.body;
-
+    
     try {
-        const user: IUser | null = await User.findOne({ username });
+        const user: IUser | null = await User.findOne(  { where: { username: username} });
+        console.log(user)
         if (!user) {
             res.status(401).send('User not found');
             return;
