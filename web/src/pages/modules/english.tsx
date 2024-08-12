@@ -1,39 +1,46 @@
 import React, { useState } from 'react';
 import "@/app/globals.css";
 import Link from 'next/link';
-import { CornerDownLeft } from 'lucide-react';
+
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion"
+} from "@/components/ui/accordion";
+
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+
+import { courses, topics } from '@/types/data.english';
 
 const English = () => {
   const [notes, setNotes] = useState<string>('');
 
-  const courses = [
-    { name: 'Curso 1', link: '' },
-    { name: 'Curso 2', link: '' },
-  ];
-
-  const topics = [
-    { category: 'Tópico 1', details: ['Item 1', 'Item 2', 'Item 3'] },
-    { category: 'Tópico 2', details: ['Item 1', 'Item 2', 'Item 3'] },
-    { category: 'Tópico 3', details: ['Item 1', 'Item 2', 'Item 3'] },
-    { category: 'Tópico 4', details: ['Item 1', 'Item 2', 'Item 3'] },
-    { category: 'Tópico 5', details: ['Item 1', 'Item 2', 'Item 3'] },
-  ];
-
   return (
     <div className="p-6 bg-slate-950 text-white min-h-screen w-full">
       <div className='mx-auto max-w-7xl'>
-        <div className="flex items-center justify-between mb-14">
-          <h1 className="text-2xl md:text-4xl font-bold">Olá, Inglês!</h1>
-          <Link href="/" className="flex items-center gap-2 px-4 py-3 bg-slate-800 hover:bg-slate-900 rounded-md duration-200">
-            <CornerDownLeft className="w-5 h-5" />
-            <p className='hidden md:block text-xl'>Voltar ao Início</p>
-          </Link>
+        <div className="flex items-center justify-between mb-8">
+          <Breadcrumb className='mt-6'>
+            <BreadcrumbList className='text-3xl text-white items-center flex text-center'>
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild>
+                  <Link href="/">Início</Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild>
+                  <Link href={"/modules/english"}>Inglês</Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="mb-8">

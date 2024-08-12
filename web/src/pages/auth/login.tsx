@@ -127,8 +127,8 @@ const Login = () => {
               <Button type="submit" variant={"loginButton"} className="py-5">
                 {loading ? 'Entrando...' : 'Entrar'}
               </Button>
-              {error && <p className="text-red-500 mt-4">{error}</p>}
-              {success && <p className="text-green-500 mt-4">{success}</p>}
+              {error && <p className="text-red-500 mt-4 text-center">{error}</p>}
+              {success && <p className="text-green-500 mt-4 text-center">{success}</p>}
             </form>
           </Form>
         </div>
