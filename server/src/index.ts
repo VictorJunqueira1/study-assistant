@@ -1,7 +1,7 @@
 import express, { NextFunction, Request, Response } from 'express';
 import cors from 'cors';
 import connectDB from './config/config';
-import { Authenticate } from './controllers/auth';
+import { Authenticate, createUser } from './controllers/auth';
 import cookieParser from "cookie-parser"
 
 const app = express();
@@ -35,11 +35,13 @@ const Guard = (req: Request, res: Response, next: NextFunction) => {
     }
 };
 
-app.use('/ping', Guard, (req: Request, res: Response) => {
+app.use('/ping', Guard, (req: Request, res: Response) => {  
     return res.status(200).json({
         message: "Connected!"
     })
 })
+
+app.use('/create', createUser)
 
 app.listen(8000, () => {
     console.log('Server running on http://localhost:8000');

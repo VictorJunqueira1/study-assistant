@@ -26,7 +26,7 @@ const Math = () => {
       <div className='mx-auto max-w-7xl'>
         <div className="flex items-center justify-between mb-8">
           <Breadcrumb className='mt-6'>
-            <BreadcrumbList className='text-3xl text-white items-center flex text-center'>
+            <BreadcrumbList className='text-2xl md:text-3xl text-white items-center flex text-center'>
               <BreadcrumbItem>
                 <BreadcrumbLink asChild>
                   <Link href="/">Início</Link>
