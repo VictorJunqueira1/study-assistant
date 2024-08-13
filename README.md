@@ -36,9 +36,9 @@
 - **ShadCN**: Biblioteca de componentes para criar interfaces modernas.
 - **Zod**: Biblioteca para validação de esquemas e tipos.
 - **Lucide React**: Conjunto de ícones SVG para React.
-- **Node.js**: Ambiente de execução JavaScript do lado do servidor.
-- **Express.js**: Framework para Node.js que facilita a criação de APIs e gerenciamento de rotas.
-- **MongoDB**: Banco de dados NoSQL para armazenamento de dados flexível e escalável.
+- **Firebase**: Plataforma de desenvolvimento que fornece serviços como autenticação, banco de dados em tempo real e armazenamento de arquivos.
+- **Firebase Authentication**: Serviço para gerenciar autenticação de usuários com suporte a login via email/senha, redes sociais e mais.
+- **Firebase Realtime Database**: Banco de dados NoSQL que permite armazenar e sincronizar dados entre usuários em tempo real.
 
 ## Uso do Sistema
 

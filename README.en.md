@@ -35,9 +35,9 @@
 - **ShadCN**: Component library for creating modern interfaces.
 - **Zod**: Library for schema and type validation.
 - **Lucide React**: SVG icon set for React.
-- **Node.js**: JavaScript runtime environment for server-side execution.
-- **Express.js**: Node.js framework for creating APIs and managing routes.
-- **MongoDB**: NoSQL database for flexible and scalable data storage.
+- **Firebase**: Development platform providing services like authentication and real-time database.
+- **Firebase Authentication**: Service for managing user authentication with support for email/password and social logins.
+- **Firebase Realtime Database**: NoSQL database that allows storing and syncing data in real-time.
 
 ## System Usage
 
