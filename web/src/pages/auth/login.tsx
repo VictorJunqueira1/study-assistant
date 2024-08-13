@@ -126,7 +126,7 @@ const Login = () => {
                 />
               </div>
               <Button type="submit" variant={"loginButton"} className="py-5">Entrar</Button>
-              {errorMessage && <p className="text-red-500 text-center">{errorMessage}</p>}
+              {errorMessage && <p className="text-red-500 text-center">{errorMessage}</p>}  
             </form>
           </Form>
         </div>
