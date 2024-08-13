@@ -1,4 +1,18 @@
-export const roadmapLinguagens = [
+export const courses = [
+    { name: 'B7WEB', link: 'https://alunos.b7web.com.br' },
+    { name: 'Curso em Vídeo', link: 'https://www.cursoemvideo.com/meus-cursos/' },
+    { name: 'Udemy', link: 'https://www.udemy.com/home/my-courses/learning/' },
+    { name: 'FIAP', link: 'https://on.fiap.com.br/local/nanocourses/index.php' },
+];
+
+export const topics = [
+    { category: 'Conceitos e Práticas', details: ['MVC', 'MVVM', 'Microsserviços', 'Serverless', 'Design Patterns', 'DDD (Domain-Driven Design)', 'Clean Code', 'Clean Architecture'] },
+    { category: 'Testes', details: ['TDD (Test-Driven Development)', 'BDD (Behavior-Driven Development)', 'Jest', 'Mocha'] },
+    { category: 'Segurança e Performance', details: ['OAuth', 'JWT'] },
+    { category: 'Servidores e Deploy', details: ['Docker', 'Kubernetes', 'Jenkins', 'CI/CD'] },
+];
+
+export const languagesRoadmap = [
     {
         level: 1 + ` - Front-End`,
         subcategories: [
@@ -35,19 +49,4 @@ export const roadmapLinguagens = [
             { category: 'Outras Linguagens', details: ['Golang', 'Flutter'] }
         ]
     }
-];
-
-export const topics = [
-    { category: 'Conceitos e Práticas', details: ['MVC', 'MVVM', 'Microsserviços', 'Serverless', 'Design Patterns', 'DDD (Domain-Driven Design)', 'Clean Code', 'Clean Architecture'] },
-    { category: 'Testes', details: ['TDD (Test-Driven Development)', 'BDD (Behavior-Driven Development)', 'Jest', 'Mocha'] },
-    { category: 'Segurança e Performance', details: ['OAuth', 'JWT'] },
-    { category: 'Servidores e Deploy', details: ['Docker', 'Kubernetes', 'Jenkins', 'CI/CD'] },
-    { category: 'Roadmap Linguagens', details: ['JavaScript', 'TypeScript', 'React.js', 'Next.js', 'MySQL', 'PostgreSQL', 'MongoDB', 'Node.js', 'Express.js', 'Nest.js', 'Python', 'React Native', 'C#'] },
-];
-
-export const courses = [
-    { name: 'B7WEB', link: 'https://alunos.b7web.com.br' },
-    { name: 'Curso em Vídeo', link: 'https://www.cursoemvideo.com/meus-cursos/' },
-    { name: 'Udemy', link: 'https://www.udemy.com/home/my-courses/learning/' },
-    { name: 'FIAP', link: 'https://on.fiap.com.br/local/nanocourses/index.php' },
 ];

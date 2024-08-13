@@ -16,7 +16,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 
-import { roadmapLinguagens, topics, courses } from '@/types/data.prog';
+import { languagesRoadmap, topics, courses } from '@/types/data.prog';
 
 const Prog = () => {
   const [notes, setNotes] = useState<string>('');
@@ -46,68 +46,65 @@ const Prog = () => {
             <h2 className="text-xl md:text-3xl font-semibold mb-4">Tópicos de Programação</h2>
             <Accordion type="single" collapsible>
               {topics.map((topic, index) => (
-                topic.category === 'Roadmap Linguagens' ? (
-                  <AccordionItem key={index} value={`roadmap`}>
-                    <AccordionTrigger className="text-lg md:text-2xl font-semibold cursor-pointer">
-                      Roadmap Linguagens
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      {roadmapLinguagens.map((level, levelIndex) => (
-                        <Accordion key={levelIndex} type="single" collapsible>
-                          <AccordionItem value={`level-${level.level}`}>
-                            <AccordionTrigger className="text-lg md:text-xl font-semibold cursor-pointer">
-                              {level.level}
-                            </AccordionTrigger>
-                            <AccordionContent>
-                              {level.subcategories.map((subcategory, subIndex) => (
-                                <div key={subIndex} className="mb-4">
-                                  <h3 className="text-lg md:text-xl font-semibold">{subcategory.category}</h3>
-                                  <ul className="mt-2 list-disc list-inside space-y-2">
-                                    {subcategory.details.map((item, i) => (
-                                      <li key={i} className="flex items-center space-x-2 ml-4">
-                                        <input
-                                          type="checkbox"
-                                          id={`checkbox-${level.level}-${subIndex}-${i}`}
-                                          className="w-5 h-5 accent-blue-500"
-                                        />
-                                        <label htmlFor={`checkbox-${level.level}-${subIndex}-${i}`}>
-                                          {item}
-                                        </label>
-                                      </li>
-                                    ))}
-                                  </ul>
-                                </div>
-                              ))}
-                            </AccordionContent>
-                          </AccordionItem>
-                        </Accordion>
+                <AccordionItem key={index} value={`topic-${index}`}>
+                  <AccordionTrigger className="text-lg md:text-2xl font-semibold cursor-pointer">
+                    {topic.category}
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <ul className="mt-2 list-disc list-inside space-y-2">
+                      {topic.details.map((item, i) => (
+                        <li key={i} className="flex items-center space-x-2 ml-4">
+                          <input
+                            type="checkbox"
+                            id={`checkbox-${index}-${i}`}
+                            className="w-5 h-5 accent-blue-500"
+                          />
+                          <label htmlFor={`checkbox-${index}-${i}`}>
+                            {item}
+                          </label>
+                        </li>
                       ))}
-                    </AccordionContent>
-                  </AccordionItem>
-                ) : (
-                  <AccordionItem key={index} value={`topic-${index}`}>
-                    <AccordionTrigger className="text-lg md:text-2xl font-semibold cursor-pointer">
-                      {topic.category}
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      <ul className="mt-2 list-disc list-inside space-y-2">
-                        {topic.details.map((item, i) => (
-                          <li key={i} className="flex items-center space-x-2 ml-4">
-                            <input
-                              type="checkbox"
-                              id={`checkbox-${index}-${i}`}
-                              className="w-5 h-5 accent-blue-500"
-                            />
-                            <label htmlFor={`checkbox-${index}-${i}`}>
-                              {item}
-                            </label>
-                          </li>
-                        ))}
-                      </ul>
-                    </AccordionContent>
-                  </AccordionItem>
-                )
+                    </ul>
+                  </AccordionContent>
+                </AccordionItem>
               ))}
+              <AccordionItem value={`roadmap`}>
+                <AccordionTrigger className="text-lg md:text-2xl font-semibold cursor-pointer">
+                  Roadmap Linguagens
+                </AccordionTrigger>
+                <AccordionContent>
+                  <Accordion type="single" collapsible>
+                    {languagesRoadmap.map((level, levelIndex) => (
+                      <AccordionItem key={levelIndex} value={`level-${level.level}`}>
+                        <AccordionTrigger className="text-lg md:text-xl font-semibold cursor-pointer">
+                          {level.level}
+                        </AccordionTrigger>
+                        <AccordionContent>
+                          {level.subcategories.map((subcategory, subIndex) => (
+                            <div key={subIndex} className="mb-4">
+                              <h3 className="text-lg md:text-xl font-semibold">{subcategory.category}</h3>
+                              <ul className="mt-2 list-disc list-inside space-y-2">
+                                {subcategory.details.map((item, i) => (
+                                  <li key={i} className="flex items-center space-x-2 ml-4">
+                                    <input
+                                      type="checkbox"
+                                      id={`checkbox-${level.level}-${subIndex}-${i}`}
+                                      className="w-5 h-5 accent-blue-500"
+                                    />
+                                    <label htmlFor={`checkbox-${level.level}-${subIndex}-${i}`}>
+                                      {item}
+                                    </label>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          ))}
+                        </AccordionContent>
+                      </AccordionItem>
+                    ))}
+                  </Accordion>
+                </AccordionContent>
+              </AccordionItem>
             </Accordion>
           </div>
           <div>
