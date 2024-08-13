@@ -14,6 +14,10 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { useState } from "react"
+import { ref, set, get } from "firebase/database";
+import { database } from '../../lib/firebase';
+import { useRouter } from 'next/navigation';
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -29,6 +33,7 @@ const formSchema = z.object({
 })
 
 const Login = () => {
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -36,6 +41,8 @@ const Login = () => {
       password: "",
     },
   })
+
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const getCurrentGreeting = () => {
     const currentHour = new Date().getHours()
@@ -48,8 +55,39 @@ const Login = () => {
     }
   }
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log("Formulário enviado com valores:", values);
+    const { username, password } = values;
+
+    if (username === "VictorJunqueira" && password === "gataNina@10") {
+      console.log("Usuário autenticado com sucesso!");
+      setErrorMessage(null);
+
+      const usuario = { username, password };
+
+      await escreverDados(usuario);
+
+      router.push('/');
+
+    } else {
+      setErrorMessage("Credenciais inválidas. Tente novamente.");
+      console.error("Erro ao autenticar: Credenciais inválidas.");
+    }
+  }
+
+  async function escreverDados(usuario: unknown) {
+    try {
+      await set(ref(database, 'usuarios/1'), usuario);
+      console.log("Dados gravados com sucesso!");
+      const snapshot = await get(ref(database, 'usuarios/1'));
+      if (snapshot.exists()) {
+        console.log("Dados salvos:", snapshot.val());
+      } else {
+        console.log("Nenhum dado encontrado.");
+      }
+    } catch (error) {
+      console.error("Erro ao gravar dados: ", error);
+    }
   }
 
   return (
@@ -65,7 +103,7 @@ const Login = () => {
                   name="username"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Nome</FormLabel>
+                      <FormLabel>Nome de Usuário</FormLabel>
                       <FormControl>
                         <Input placeholder="Insira seu nome" className="py-5 border-blue-800 placeholder:text-gray-300" {...field} />
                       </FormControl>
@@ -88,6 +126,7 @@ const Login = () => {
                 />
               </div>
               <Button type="submit" variant={"loginButton"} className="py-5">Entrar</Button>
+              {errorMessage && <p className="text-red-500 text-center">{errorMessage}</p>}
             </form>
           </Form>
         </div>

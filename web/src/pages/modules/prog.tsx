@@ -29,7 +29,7 @@ const Prog = () => {
             <BreadcrumbList className='text-2xl md:text-3xl text-white items-center flex text-center'>
               <BreadcrumbItem>
                 <BreadcrumbLink asChild>
-                  <Link href="/">Início</Link>
+                  <Link href="/" className='text-2xl font-light'>Início</Link>
                 </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
