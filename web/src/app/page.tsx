@@ -34,10 +34,15 @@ const Home: React.FC = () => {
     );
   }
 
+  if (!user) {
+    router.push('/auth/login');
+    return null;
+  }
+
   return (
     <div className="bg-slate-950 text-white min-h-screen flex flex-col items-center justify-center p-4">
       <div className="mx-auto max-w-7xl w-full">
-        <h1 className="mb-8 text-4xl font-bold text-center">Olá, {user?.email}!</h1>
+        <h1 className="mb-8 text-4xl font-bold text-center">Olá, Victor Junqueira!</h1>
         <div className="flex flex-col md:flex-row items-center justify-center space-y-6 md:space-y-0 md:space-x-6">
           <Link
             href={"/modules/math"}

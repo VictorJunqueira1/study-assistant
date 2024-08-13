@@ -11,19 +11,18 @@ import { useRouter } from 'next/navigation';
 import { useState } from "react";
 
 const formSchema = z.object({
-  username: z.string().min(2, {
-    message: "Este campo é obrigatório."
-  }).max(16, {
-    message: "Campo inválido, preencha corretamente."
-  }),
-  password: z.string().min(2, {
-    message: "Este campo é obrigatório."
-  }).max(16, {
-    message: "Campo inválido, preencha corretamente."
-  }),
+  username: z.string().email("Email inválido").min(1, "Email é obrigatório"),
+  password: z.string().min(6, "Senha deve ter pelo menos 6 caracteres")
 });
 
 type FormSchemaType = z.infer<typeof formSchema>;
+
+const getGreeting = (): string => {
+  const hour = new Date().getHours();
+  if (hour >= 5 && hour < 12) return "Bom dia! ☀️";
+  if (hour >= 12 && hour < 18) return "Boa tarde! 🌇";
+  return "Boa noite! 🌃";
+};
 
 const Login: React.FC = () => {
   const router = useRouter();
@@ -52,16 +51,16 @@ const Login: React.FC = () => {
       <div className="max-w-7xl min-h-screen mx-auto flex items-center justify-center">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="w-full max-w-xs">
-            <h1 className="mb-6 text-4xl font-bold text-center">Bem-vindo</h1>
+            <h1 className="mb-6 text-4xl font-bold text-center">{getGreeting()}</h1>
             <div className="space-y-3">
               <FormField
                 control={form.control}
                 name="username"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Nome de Usuário</FormLabel>
+                    <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input placeholder="Insira seu nome" className="py-5 border-blue-800 placeholder:text-gray-300" {...field} />
+                      <Input placeholder="Insira seu email" className="py-5 border-blue-800 placeholder:text-gray-300" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -82,7 +81,7 @@ const Login: React.FC = () => {
               />
             </div>
             <Button type="submit" variant={"loginButton"} className="py-5">Entrar</Button>
-            {errorMessage && <p className="text-red-500 text-center">{errorMessage}</p>}
+            {errorMessage && <p className="text-red-500 text-center mt-4">{errorMessage}</p>}
           </form>
         </Form>
       </div>
