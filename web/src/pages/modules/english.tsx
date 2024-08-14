@@ -17,7 +17,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 
-import { courses, topics } from '@/types/data.english';
+import { courses, topics } from '@/types/data/data.english';
 
 import { database } from '@/lib/firebase';
 
@@ -37,9 +37,7 @@ const English = () => {
         setCheckboxStates(data || {});
       });
 
-      return () => {
-
-      };
+      return () => { };
     };
 
     fetchCheckboxStates();
@@ -94,7 +92,10 @@ const English = () => {
                             onChange={() => handleCheckboxChange(topic.category, i)}
                             className="w-5 h-5 accent-blue-500"
                           />
-                          <label htmlFor={`checkbox-${index}-${i}`}>
+                          <label
+                            htmlFor={`checkbox-${index}-${i}`}
+                            className={`ml-2 ${checkboxStates[`${topic.category}-${i}`] ? 'line-through text-gray-500' : ''}`}
+                          >
                             {item}
                           </label>
                         </li>

@@ -3,7 +3,7 @@ import "@/app/globals.css";
 import Link from 'next/link';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { languagesRoadmap, topics, courses } from '@/types/data.prog';
+import { languagesRoadmap, topics, courses } from '@/types/data/data.prog';
 import { database } from '@/lib/firebase';
 import { ref, onValue, set } from 'firebase/database';
 
@@ -48,7 +48,10 @@ const Prog = () => {
           onChange={() => handleCheckboxChange(category, i)}
           className="w-5 h-5 accent-blue-500"
         />
-        <label htmlFor={`${category}-${i}`}>
+        <label
+          htmlFor={`checkbox-${category}-${i}`}
+          className={`ml-2 ${checkboxStates[`${category}-${i}`] ? 'line-through text-gray-500' : ''}`}
+        >
           {item}
         </label>
       </li>
