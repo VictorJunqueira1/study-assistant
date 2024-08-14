@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+"use client"
+
+import React, { useState, useEffect } from 'react';
 import "@/app/globals.css";
 import Link from 'next/link';
+
 import {
   Accordion,
   AccordionContent,
@@ -18,8 +21,40 @@ import {
 
 import { topics, courses } from '@/types/data.math';
 
+import { database } from '@/lib/firebase';
+
+import { ref, onValue, set } from 'firebase/database';
+
 const Math = () => {
+  const [checkboxStates, setCheckboxStates] = useState<{ [key: string]: boolean }>({});
   const [notes, setNotes] = useState<string>('');
+
+  useEffect(() => {
+    const fetchCheckboxStates = async () => {
+      const userId = 'Victor Junqueira';
+      const checkboxRef = ref(database, `users/${userId}/mathCheckboxStates`);
+
+      onValue(checkboxRef, (snapshot) => {
+        const data = snapshot.val();
+        setCheckboxStates(data || {});
+      });
+
+      return () => {
+
+      };
+    };
+
+    fetchCheckboxStates();
+  }, []);
+
+  const handleCheckboxChange = (category: string, index: number) => {
+    const newState = { ...checkboxStates, [`${category}-${index}`]: !checkboxStates[`${category}-${index}`] };
+    setCheckboxStates(newState);
+
+    const userId = 'Victor Junqueira';
+    const checkboxRef = ref(database, `users/${userId}/mathCheckboxStates`);
+    set(checkboxRef, newState);
+  };
 
   return (
     <div className="p-6 bg-slate-950 text-white min-h-screen w-full">
@@ -57,11 +92,11 @@ const Math = () => {
                           <input
                             type="checkbox"
                             id={`checkbox-${index}-${i}`}
+                            checked={checkboxStates[`${topic.category}-${i}`] || false}
+                            onChange={() => handleCheckboxChange(topic.category, i)}
                             className="w-5 h-5 accent-blue-500"
                           />
-                          <label
-                            htmlFor={`checkbox-${index}-${i}`}
-                          >
+                          <label htmlFor={`checkbox-${index}-${i}`}>
                             {item}
                           </label>
                         </li>
