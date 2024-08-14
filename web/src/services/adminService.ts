@@ -1,21 +1,20 @@
-import { initializeApp, cert } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import * as admin from 'firebase-admin';
+import serviceAccount from '@/services/config/serviceAccountKey.json';
 
-initializeApp({
-    credential: cert({
-        projectId: "1:653540759289:web:db616a1ddd767e185bb428",
-        privateKey: "-----BEGIN PRIVATE KEY-----\n...",
-        clientEmail: "firebase-adminsdk-xxxxx@seu-projeto-id.iam.gserviceaccount.com",
-    }),
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount as admin.ServiceAccount),
+    databaseURL: 'https://study-assistant-2bf95-default-rtdb.firebaseio.com'
 });
 
-const getUserUID = async (email: string) => {
+const db = admin.database();
+
+const getUserUID = async (email: string): Promise<string> => {
     try {
-        const userRecord = await getAuth().getUserByEmail(email);
-        console.log("UID do usuário:", userRecord.uid);
+        const userRecord = await admin.auth().getUserByEmail(email);
+        console.log('UID do usuário:', userRecord.uid);
         return userRecord.uid;
     } catch (error) {
-        console.error("Erro ao obter o usuário:", error);
+        console.error('Erro ao obter o usuário:', error);
         throw error;
     }
 };
