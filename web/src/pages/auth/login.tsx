@@ -1,3 +1,5 @@
+"use client"
+
 import { z } from "zod";
 import "@/app/globals.css";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,6 +11,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../../lib/firebase';
 import { useRouter } from 'next/navigation';
 import { useState } from "react";
+import ClipLoader from 'react-spinners/ClipLoader';
 
 const formSchema = z.object({
   username: z.string().email("Email inválido").min(1, "Email é obrigatório"),
@@ -35,14 +38,18 @@ const Login: React.FC = () => {
   });
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   async function onSubmit(values: FormSchemaType) {
+    setIsLoading(true);
     try {
       const { username, password } = values;
       await signInWithEmailAndPassword(auth, username, password);
       router.push('/');
     } catch (error) {
       setErrorMessage("Credenciais inválidas. Tente novamente.");
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -80,7 +87,9 @@ const Login: React.FC = () => {
                 )}
               />
             </div>
-            <Button type="submit" variant={"loginButton"} className="py-5">Entrar</Button>
+            <Button type="submit" variant={"loginButton"} className="py-5">
+              {isLoading ? <ClipLoader color="#ffffff" loading={isLoading} size={24} /> : "Entrar"}
+            </Button>
             {errorMessage && <p className="text-red-500 text-center mt-4">{errorMessage}</p>}
           </form>
         </Form>
