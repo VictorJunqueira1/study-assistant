@@ -1,25 +1,59 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "@/app/globals.css";
 import Link from 'next/link';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { languagesRoadmap, topics, courses } from '@/types/data.prog';
+import { database } from '@/lib/firebase';
+import { ref, onValue, set } from 'firebase/database';
 
 const Prog = () => {
+  const [checkboxStates, setCheckboxStates] = useState<{ [key: string]: boolean }>({});
   const [notes, setNotes] = useState<string>('');
+
+  useEffect(() => {
+    const fetchCheckboxStates = async () => {
+      const userId = 'Victor Junqueira';
+      const checkboxRef = ref(database, `users/${userId}/checkboxStates`);
+
+      onValue(checkboxRef, (snapshot) => {
+        const data = snapshot.val();
+        setCheckboxStates(data || {});
+      });
+
+      return () => {
+
+      };
+    };
+
+    fetchCheckboxStates();
+  }, []);
+
+  const handleCheckboxChange = (category: string, index: number) => {
+    const newState = { ...checkboxStates, [`${category}-${index}`]: !checkboxStates[`${category}-${index}`] };
+    setCheckboxStates(newState);
+
+    const userId = 'Victor Junqueira';
+    const checkboxRef = ref(database, `users/${userId}/checkboxStates`);
+    set(checkboxRef, newState);
+  };
+
+  const renderCheckboxes = (details: string[], category: string) => {
+    return details.map((item, i) => (
+      <li key={i} className="flex items-center space-x-2 ml-4">
+        <input
+          type="checkbox"
+          id={`${category}-${i}`}
+          checked={checkboxStates[`${category}-${i}`] || false}
+          onChange={() => handleCheckboxChange(category, i)}
+          className="w-5 h-5 accent-blue-500"
+        />
+        <label htmlFor={`${category}-${i}`}>
+          {item}
+        </label>
+      </li>
+    ));
+  };
 
   return (
     <div className="p-6 bg-slate-950 text-white min-h-screen w-full">
@@ -52,18 +86,7 @@ const Prog = () => {
                   </AccordionTrigger>
                   <AccordionContent>
                     <ul className="mt-2 list-disc list-inside space-y-2">
-                      {topic.details.map((item, i) => (
-                        <li key={i} className="flex items-center space-x-2 ml-4">
-                          <input
-                            type="checkbox"
-                            id={`checkbox-${index}-${i}`}
-                            className="w-5 h-5 accent-blue-500"
-                          />
-                          <label htmlFor={`checkbox-${index}-${i}`}>
-                            {item}
-                          </label>
-                        </li>
-                      ))}
+                      {renderCheckboxes(topic.details, topic.category)}
                     </ul>
                   </AccordionContent>
                 </AccordionItem>
@@ -84,18 +107,7 @@ const Prog = () => {
                             <div key={subIndex} className="mb-4">
                               <h3 className="text-lg md:text-xl font-semibold">{subcategory.category}</h3>
                               <ul className="mt-2 list-disc list-inside space-y-2">
-                                {subcategory.details.map((item, i) => (
-                                  <li key={i} className="flex items-center space-x-2 ml-4">
-                                    <input
-                                      type="checkbox"
-                                      id={`checkbox-${level.level}-${subIndex}-${i}`}
-                                      className="w-5 h-5 accent-blue-500"
-                                    />
-                                    <label htmlFor={`checkbox-${level.level}-${subIndex}-${i}`}>
-                                      {item}
-                                    </label>
-                                  </li>
-                                ))}
+                                {renderCheckboxes(subcategory.details, subcategory.category)}
                               </ul>
                             </div>
                           ))}
@@ -133,6 +145,6 @@ const Prog = () => {
       </div>
     </div>
   );
-}
+};
 
 export default Prog;
