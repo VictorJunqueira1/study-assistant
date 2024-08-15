@@ -21,9 +21,7 @@ const Prog = () => {
         setCheckboxStates(data || {});
       });
 
-      return () => {
-
-      };
+      return () => { };
     };
 
     fetchCheckboxStates();
