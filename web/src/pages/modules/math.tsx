@@ -27,10 +27,9 @@ import { ref, onValue, set } from 'firebase/database';
 
 const Math = () => {
   const [checkboxStates, setCheckboxStates] = useState<{ [key: string]: boolean }>({});
-  const [notes, setNotes] = useState<string>('');
 
   useEffect(() => {
-    const fetchCheckboxStates = async () => {
+    const fetchData = async () => {
       const userId = 'Victor Junqueira';
       const checkboxRef = ref(database, `users/${userId}/mathCheckboxStates`);
 
@@ -38,13 +37,9 @@ const Math = () => {
         const data = snapshot.val();
         setCheckboxStates(data || {});
       });
-
-      return () => {
-
-      };
     };
 
-    fetchCheckboxStates();
+    fetchData();
   }, []);
 
   const handleCheckboxChange = (category: string, index: number) => {
@@ -123,19 +118,9 @@ const Math = () => {
             </ul>
           </div>
         </div>
-        <div className="mb-8">
-          <h2 className="text-3xl font-semibold mb-4">Anotações</h2>
-          <textarea
-            value={notes}
-            onChange={(e) => setNotes(e.target.value)}
-            className="w-full md:w-full mb-2 h-44 flex flex-col p-4 border border-blue-900 bg-slate-900 rounded-lg resize-none focus:outline"
-            placeholder="Escreva suas anotações aqui..."
-          ></textarea>
-          <Link href="#" className="text-blue-400 hover:underline">Ver todas as anotações</Link>
-        </div>
       </div>
     </div>
   );
-}
+};
 
 export default Math;

@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useState, useEffect } from 'react';
 import "@/app/globals.css";
 import Link from 'next/link';
@@ -14,7 +16,7 @@ const Prog = () => {
   useEffect(() => {
     const fetchCheckboxStates = async () => {
       const userId = 'Victor Junqueira';
-      const checkboxRef = ref(database, `users/${userId}/checkboxStates`);
+      const checkboxRef = ref(database, `users/${userId}/progCheckboxStates`);
 
       onValue(checkboxRef, (snapshot) => {
         const data = snapshot.val();
@@ -32,7 +34,7 @@ const Prog = () => {
     setCheckboxStates(newState);
 
     const userId = 'Victor Junqueira';
-    const checkboxRef = ref(database, `users/${userId}/checkboxStates`);
+    const checkboxRef = ref(database, `users/${userId}/progCheckboxStates`);
     set(checkboxRef, newState);
   };
 
@@ -132,16 +134,6 @@ const Prog = () => {
               ))}
             </ul>
           </div>
-        </div>
-        <div className="mb-8 mt-8">
-          <h2 className="text-3xl font-semibold mb-4">Anotações</h2>
-          <textarea
-            value={notes}
-            onChange={(e) => setNotes(e.target.value)}
-            className="w-full md:w-full mb-2 h-44 flex flex-col p-4 border border-blue-900 bg-slate-900 rounded-lg resize-none focus:outline"
-            placeholder="Escreva suas anotações aqui..."
-          ></textarea>
-          <Link href="#" className="text-blue-400 hover:underline">Ver todas as anotações</Link>
         </div>
       </div>
     </div>
