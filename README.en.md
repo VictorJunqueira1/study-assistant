@@ -8,7 +8,7 @@
 2. [Features](#features)
 3. [Technologies Used](#technologies-used)
 4. [System Usage](#system-usage)
-5. [License](#license)
+5. **[Versão em Português](README.md)**
 
 ---
 
@@ -46,11 +46,3 @@
 3. **Navigating the Study Area**:
    - **Roadmap**: In each study area, view a roadmap with checklists to track what has been studied. Check items off as you progress in your studies.
    - **Course Links**: Access course links directly from the page of the selected study area.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-**Para a versão em português deste README, veja [README.md](README.md).**

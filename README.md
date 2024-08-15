@@ -8,8 +8,7 @@
 2. [Funcionalidades](#funcionalidades)
 3. [Tecnologias Utilizadas](#tecnologias-utilizadas)
 4. [Uso do Sistema](#uso-do-sistema)
-5. [Licença](#licença)
-6. [English Version](README.en.md)
+5. **[English Version](README.en.md)**
 
 ---
 
@@ -34,7 +33,7 @@
 - **ShadCN**: Biblioteca de componentes para criar interfaces modernas.
 - **Zod**: Biblioteca para validação de esquemas e tipos.
 - **Lucide React**: Conjunto de ícones SVG para React.
-- **Firebase**: Plataforma de desenvolvimento que fornece serviços como autenticação, banco de dados em tempo real e armazenamento de arquivos.
+- **Firebase**: Plataforma de desenvolvimento que fornece serviços como autenticação e banco de dados em tempo real.
 - **Firebase Authentication**: Serviço para gerenciar autenticação de usuários com suporte a login via email/senha, redes sociais e mais.
 - **Firebase Realtime Database**: Banco de dados NoSQL que permite armazenar e sincronizar dados entre usuários em tempo real.
 
@@ -47,7 +46,3 @@
 3. **Navegação na Área de Estudo**:
    - **Roadmap**: Em cada área de estudo, visualize um roadmap com checklists para acompanhar o que já foi estudado. Marcando os itens conforme avança nos estudos.
    - **Links para Cursos**: Acesse os links dos cursos diretamente na página da área de estudo selecionada.
-
----
-
-**For the English version of this README, see [README.en.md](README.en.md).**
