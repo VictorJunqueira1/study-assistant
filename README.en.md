@@ -1,6 +1,6 @@
 # Study Assistant
 
-**Study Assistant** is a personal web system developed to help you organize and manage your studies across multiple areas such as Programming, Mathematics, and English. The system allows you to get a consolidated view of your progress, make digital notes, and quickly access your courses.
+**Study Assistant** is a personal web system developed to help you organize and manage your studies across multiple areas such as Programming, Mathematics, and English. The system allows you to get a consolidated view of your progress and quickly access your courses.
 
 ## Table of Contents
 
@@ -14,17 +14,15 @@
 
 ## Overview
 
-**Study Assistant** is built using a modern technology stack to provide a user-friendly and functional interface for managing your learning. The system has three main areas:
+**Study Assistant** is built using a modern technology stack to provide a user-friendly and functional interface for managing your learning. The system has two main areas:
 
 - **Roadmap**: Visualize and plan your study progress.
 - **Courses**: Direct links to access your courses and learning materials.
-- **Notes**: Keep and organize your digital notes efficiently.
 
 ## Features
 
 - **Roadmap Area**: Plan and track your progress in Programming, Mathematics, and English.
 - **Course Links**: Quickly access your courses through integrated links in the navigation bar.
-- **Note System**: Create and manage digital notes in a practical and organized manner.
 - **Responsive Interface**: Adaptive design for different screen sizes, ensuring a consistent user experience.
 
 ## Technologies Used
@@ -48,8 +46,11 @@
 3. **Navigating the Study Area**:
    - **Roadmap**: In each study area, view a roadmap with checklists to track what has been studied. Check items off as you progress in your studies.
    - **Course Links**: Access course links directly from the page of the selected study area.
-   - **Notes**: At the end of each area page, add and organize your notes. Notes are saved and can be reviewed as needed.
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+**Para a versão em português deste README, veja [README.md](README.md).**

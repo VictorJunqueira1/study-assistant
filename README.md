@@ -1,6 +1,6 @@
 # Study Assistant
 
-**Study Assistant** é um sistema web pessoal desenvolvido para ajudar a organizar e gerenciar seus estudos em múltiplas áreas, como Programação, Matemática e Inglês. O sistema permite que você tenha uma visão consolidada do seu progresso, faça anotações digitais e acesse rapidamente seus cursos.
+**Study Assistant** é um sistema web pessoal desenvolvido para ajudar a organizar e gerenciar seus estudos em múltiplas áreas, como Programação, Matemática e Inglês. O sistema permite que você tenha uma visão consolidada do seu progresso e acesse rapidamente seus cursos.
 
 ## Sumário
 
@@ -9,23 +9,21 @@
 3. [Tecnologias Utilizadas](#tecnologias-utilizadas)
 4. [Uso do Sistema](#uso-do-sistema)
 5. [Licença](#licença)
-6. **[English Version](README.en.md)**
+6. [English Version](README.en.md)
 
 ---
 
 ## Visão Geral
 
-**Study Assistant** é desenvolvido usando um conjunto de tecnologias modernas para fornecer uma interface amigável e funcional para gerenciar seu aprendizado. O sistema tem três principais áreas:
+**Study Assistant** é desenvolvido usando um conjunto de tecnologias modernas para fornecer uma interface amigável e funcional para gerenciar seu aprendizado. O sistema tem duas principais áreas:
 
 - **Roadmap**: Visualize e planeje seu progresso de estudo.
 - **Cursos**: Links diretos para acessar seus cursos e materiais de aprendizado.
-- **Anotações**: Mantenha e organize suas notas digitais de forma eficiente.
 
 ## Funcionalidades
 
 - **Área de Roadmap**: Planeje e acompanhe seu progresso em Programação, Matemática e Inglês.
 - **Links para Cursos**: Acesse rapidamente seus cursos através de links integrados na barra de navegação.
-- **Sistema de Anotações**: Faça e gerencie anotações digitais de forma prática e organizada.
 - **Interface Responsiva**: Design adaptável para diferentes tamanhos de tela, garantindo uma experiência de usuário consistente.
 
 ## Tecnologias Utilizadas
@@ -49,8 +47,7 @@
 3. **Navegação na Área de Estudo**:
    - **Roadmap**: Em cada área de estudo, visualize um roadmap com checklists para acompanhar o que já foi estudado. Marcando os itens conforme avança nos estudos.
    - **Links para Cursos**: Acesse os links dos cursos diretamente na página da área de estudo selecionada.
-   - **Anotações**: No final da página de cada área, adicione e organize suas anotações. As anotações são armazenadas e podem ser revisadas quando necessário.
 
-## Licença
+---
 
-Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
+**For the English version of this README, see [README.en.md](README.en.md).**
