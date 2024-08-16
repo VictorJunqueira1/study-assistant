@@ -1,5 +1,3 @@
-"use client"
-
 import React, { useState, useEffect } from 'react';
 import "@/app/globals.css";
 import Link from 'next/link';
@@ -9,9 +7,12 @@ import { topics, courses } from '@/types/data/data.english';
 import { database } from '@/lib/firebase';
 import { ref, onValue, set } from 'firebase/database';
 import Sidebar from '@/components/Aside';
+import { Progress } from "@/components/ui/progress";
 
 const English = () => {
   const [checkboxStates, setCheckboxStates] = useState<{ [key: string]: boolean }>({});
+  const [totalCheckboxes, setTotalCheckboxes] = useState<number>(0);
+  const [checkedCheckboxes, setCheckedCheckboxes] = useState<number>(0);
 
   useEffect(() => {
     const fetchCheckboxStates = async () => {
@@ -19,8 +20,10 @@ const English = () => {
       const checkboxRef = ref(database, `users/${userId}/englishCheckboxStates`);
 
       onValue(checkboxRef, (snapshot) => {
-        const data = snapshot.val();
-        setCheckboxStates(data || {});
+        const data = snapshot.val() || {};
+        console.log('Fetched Checkbox States:', data);
+        setCheckboxStates(data);
+        calculateProgress(data);
       });
 
       return () => { };
@@ -30,15 +33,23 @@ const English = () => {
   }, []);
 
   const handleCheckboxChange = (category: string, index: number) => {
-    const newState = { ...checkboxStates, [`${category}-${index}`]: !checkboxStates[`${category}-${index}`] };
+    const key = `${category}-${index}`;
+    const newState = { ...checkboxStates, [key]: !checkboxStates[key] };
+    console.log('Checkbox Change:', key, newState[key]);
     setCheckboxStates(newState);
+    calculateProgress(newState);
 
     const userId = 'Victor Junqueira';
     const checkboxRef = ref(database, `users/${userId}/englishCheckboxStates`);
-    set(checkboxRef, newState);
+    set(checkboxRef, newState).then(() => {
+      console.log('Updated Firebase Checkbox States:', newState);
+    }).catch(error => {
+      console.error('Error updating Firebase:', error);
+    });
   };
 
   const renderCheckboxes = (details: string[], category: string) => {
+    console.log('Rendering Checkboxes for Category:', category, details);
     return details.map((item, i) => (
       <li key={i} className="flex items-center space-x-2 ml-4">
         <input
@@ -57,6 +68,32 @@ const English = () => {
       </li>
     ));
   };
+
+  const combineData = () => {
+    const combined: string[] = [];
+    topics.forEach(topic => {
+      combined.push(...topic.details.map((_, index) => `${topic.category}-${index}`));
+    });
+    return combined;
+  };
+
+  const calculateProgress = (checkboxStates: { [key: string]: boolean }) => {
+    const items = combineData();
+    const total = items.length;
+    const checked = items.filter(item => checkboxStates[item] === true).length;
+
+    console.log('Total Checkboxes:', total);
+    console.log('Checked Checkboxes:', checked);
+
+    setTotalCheckboxes(total);
+    setCheckedCheckboxes(checked);
+  };
+
+  const progressPercentage = totalCheckboxes === 0 ? 0 : (checkedCheckboxes / totalCheckboxes) * 100;
+
+  const roundPercentage = (value: number) => Math.floor(value + 0.5);
+
+  console.log('Progress Percentage:', progressPercentage);
 
   return (
     <>
@@ -110,6 +147,13 @@ const English = () => {
                     </li>
                   ))}
                 </ul>
+              </div>
+              <div className="bg-slate-900 p-6 rounded-xl shadow-lg">
+                <h2 className="text-2xl md:text-3xl font-semibold mb-4">Progresso</h2>
+                <Progress value={progressPercentage} className="w-full h-4 bg-gray-700 rounded-full">
+                  <div className="bg-blue-500 h-full rounded-full" style={{ width: `${progressPercentage}%` }}></div>
+                </Progress>
+                <div className="mt-2 text-white">{roundPercentage(progressPercentage)}% Completo</div>
               </div>
             </div>
           </div>

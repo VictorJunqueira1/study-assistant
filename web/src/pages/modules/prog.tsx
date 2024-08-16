@@ -1,5 +1,3 @@
-"use client"
-
 import React, { useState, useEffect } from 'react';
 import "@/app/globals.css";
 import Link from 'next/link';
@@ -9,9 +7,32 @@ import { languagesRoadmap, topics, courses } from '@/types/data/data.prog';
 import { database } from '@/lib/firebase';
 import { ref, onValue, set } from 'firebase/database';
 import Sidebar from '@/components/Aside';
+import { Progress } from "@/components/ui/progress"
+
+const normalizeKey = (key: string) => {
+  return key.replace(/[.#$/[\]]/g, '_');
+};
+
+const combineData = () => {
+  const combined: string[] = [];
+
+  topics.forEach(topic => {
+    combined.push(...topic.details);
+  });
+
+  languagesRoadmap.forEach(level => {
+    level.subcategories.forEach(subcategory => {
+      combined.push(...subcategory.details);
+    });
+  });
+
+  return combined;
+};
 
 const Prog = () => {
   const [checkboxStates, setCheckboxStates] = useState<{ [key: string]: boolean }>({});
+  const [totalCheckboxes, setTotalCheckboxes] = useState<number>(0);
+  const [checkedCheckboxes, setCheckedCheckboxes] = useState<number>(0);
 
   useEffect(() => {
     const fetchCheckboxStates = async () => {
@@ -21,6 +42,7 @@ const Prog = () => {
       onValue(checkboxRef, (snapshot) => {
         const data = snapshot.val();
         setCheckboxStates(data || {});
+        calculateProgress(data || {});
       });
 
       return () => { };
@@ -29,34 +51,47 @@ const Prog = () => {
     fetchCheckboxStates();
   }, []);
 
-  const handleCheckboxChange = (category: string, index: number) => {
-    const newState = { ...checkboxStates, [`${category}-${index}`]: !checkboxStates[`${category}-${index}`] };
+  const handleCheckboxChange = (item: string) => {
+    const key = normalizeKey(item);
+    const newState = { ...checkboxStates, [key]: !checkboxStates[key] };
     setCheckboxStates(newState);
+    calculateProgress(newState);
 
     const userId = 'Victor Junqueira';
     const checkboxRef = ref(database, `users/${userId}/progCheckboxStates`);
     set(checkboxRef, newState);
   };
 
-  const renderCheckboxes = (details: string[], category: string) => {
-    return details.map((item, i) => (
+  const calculateProgress = (checkboxStates: { [key: string]: boolean }) => {
+    const total = Object.keys(checkboxStates).length;
+    const checked = Object.values(checkboxStates).filter(value => value).length;
+
+    setTotalCheckboxes(total);
+    setCheckedCheckboxes(checked);
+  };
+
+  const renderCheckboxes = (items: string[]) => {
+    return items.map((item, i) => (
       <li key={i} className="flex items-center space-x-2 ml-4">
         <input
           type="checkbox"
-          id={`${category}-${i}`}
-          checked={checkboxStates[`${category}-${i}`] || false}
-          onChange={() => handleCheckboxChange(category, i)}
+          id={item}
+          checked={checkboxStates[normalizeKey(item)] || false}
+          onChange={() => handleCheckboxChange(item)}
           className="w-5 h-5 accent-blue-500"
         />
         <label
-          htmlFor={`${category}-${i}`}
-          className={`ml-2 ${checkboxStates[`${category}-${i}`] ? 'line-through text-gray-500' : ''}`}
+          htmlFor={item}
+          className={`ml-2 ${checkboxStates[normalizeKey(item)] ? 'line-through text-gray-500' : ''}`}
         >
           {item}
         </label>
       </li>
     ));
   };
+
+  const combinedItems = combineData();
+  const progressPercentage = totalCheckboxes === 0 ? 0 : (checkedCheckboxes / totalCheckboxes) * 100;
 
   return (
     <>
@@ -92,7 +127,7 @@ const Prog = () => {
                       </AccordionTrigger>
                       <AccordionContent>
                         <ul className="mt-2 list-disc list-inside space-y-2">
-                          {renderCheckboxes(topic.details, topic.category)}
+                          {renderCheckboxes(topic.details)}
                         </ul>
                       </AccordionContent>
                     </AccordionItem>
@@ -113,7 +148,7 @@ const Prog = () => {
                                 <div key={subIndex} className="mb-4">
                                   <h3 className="text-lg md:text-xl font-semibold">{subcategory.category}</h3>
                                   <ul className="mt-2 list-disc list-inside space-y-2">
-                                    {renderCheckboxes(subcategory.details, subcategory.category)}
+                                    {renderCheckboxes(subcategory.details)}
                                   </ul>
                                 </div>
                               ))}
@@ -136,6 +171,13 @@ const Prog = () => {
                     </li>
                   ))}
                 </ul>
+              </div>
+              <div className="bg-slate-900 p-6 rounded-xl shadow-lg">
+                <h2 className="text-2xl md:text-3xl font-semibold mb-4">Progresso</h2>
+                <Progress value={progressPercentage} className="w-full h-4 bg-gray-700 rounded-full">
+                  <div className="bg-blue-400 h-full rounded-full" style={{ width: `${progressPercentage}%` }}></div>
+                </Progress>
+                <div className="mt-2 text-white">{Math.round(progressPercentage)}% Completo</div>
               </div>
             </div>
           </div>
