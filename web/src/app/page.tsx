@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useEffect, useState } from 'react';
 import { onAuthStateChanged, User as FirebaseUser } from "firebase/auth";
@@ -6,7 +6,7 @@ import { auth } from '../lib/firebase';
 import { useRouter } from 'next/navigation';
 import ClipLoader from 'react-spinners/ClipLoader';
 import Link from 'next/link';
-import { BookText, Calculator, Cpu } from "lucide-react"
+import { BookText, Calculator, Cpu } from "lucide-react";
 
 const Home: React.FC = () => {
   const [user, setUser] = useState<FirebaseUser | null>(null);
@@ -41,29 +41,46 @@ const Home: React.FC = () => {
 
   return (
     <div className="bg-slate-950 text-white min-h-screen flex flex-col items-center justify-center p-4">
-      <div className="mx-auto max-w-7xl w-full">
-        <h1 className="mb-8 text-4xl font-bold text-center">Olá, Victor Junqueira!</h1>
-        <div className="flex flex-col md:flex-row items-center justify-center space-y-6 md:space-y-0 md:space-x-6">
+      <div className="max-w-4xl w-full px-4">
+        <h1 className="text-3xl md:text-5xl font-bold text-center mb-12 leading-tight">
+          Olá, Victor Junqueira!
+        </h1>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
           <Link
-            href={"/modules/math"}
-            className="flex flex-col items-center justify-center bg-red-600 text-white rounded-lg shadow-lg transform py-8 transition-transform duration-300 hover:scale-105 w-full md:w-64 md:h-40 p-4"
+            href="/modules/math"
+            className="relative flex flex-col items-center justify-center bg-red-600 rounded-xl shadow-lg overflow-hidden transform transition-transform duration-300 hover:scale-105 w-full h-48 md:h-64 group"
           >
-            <Calculator className="h-12 w-12 mb-2 text-white" />
-            <span className="text-lg font-semibold">Matemática</span>
+            <div className="absolute top-1/2 transform -translate-y-1/2 flex items-center justify-center w-full h-full">
+              <Calculator className="h-16 w-16 text-white transition-transform transform group-hover:scale-125" />
+            </div>
+            <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <span className="text-xl md:text-2xl font-bold text-white">Matemática</span>
+              <span className="text-sm md:text-base text-white mt-2 text-center px-4">Aprofunde seus conhecimentos em matemática.</span>
+            </div>
           </Link>
           <Link
-            href={"/modules/prog"}
-            className="flex flex-col items-center justify-center bg-blue-600 text-white rounded-lg shadow-lg transform py-8 transition-transform duration-300 hover:scale-105 w-full md:w-64 md:h-40 p-4"
+            href="/modules/prog"
+            className="relative flex flex-col items-center justify-center bg-blue-600 rounded-xl shadow-lg overflow-hidden transform transition-transform duration-300 hover:scale-105 w-full h-48 md:h-64 group"
           >
-            <Cpu className="h-12 w-12 mb-2 text-white" />
-            <span className="text-lg font-semibold">Programação</span>
+            <div className="absolute top-1/2 transform -translate-y-1/2 flex items-center justify-center w-full h-full">
+              <Cpu className="h-16 w-16 text-white transition-transform transform group-hover:scale-125" />
+            </div>
+            <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <span className="text-xl md:text-2xl font-bold text-white">Programação</span>
+              <span className="text-sm md:text-base text-white mt-2 text-center px-4">Explore o mundo da programação e desenvolvimento.</span>
+            </div>
           </Link>
           <Link
-            href={"/modules/english"}
-            className="flex flex-col items-center justify-center bg-green-600 text-white rounded-lg shadow-lg transform py-8 transition-transform duration-300 hover:scale-105 w-full md:w-64 md:h-40 p-4"
+            href="/modules/english"
+            className="relative flex flex-col items-center justify-center bg-green-600 rounded-xl shadow-lg overflow-hidden transform transition-transform duration-300 hover:scale-105 w-full h-48 md:h-64 group"
           >
-            <BookText className="h-12 w-12 mb-2 text-white" />
-            <span className="text-lg font-semibold">Inglês</span>
+            <div className="absolute top-1/2 transform -translate-y-1/2 flex items-center justify-center w-full h-full">
+              <BookText className="h-16 w-16 text-white transition-transform transform group-hover:scale-125" />
+            </div>
+            <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <span className="text-xl md:text-2xl font-bold text-white">Inglês</span>
+              <span className="text-sm md:text-base text-white mt-2 text-center px-4">Aprenda e pratique o inglês de forma interativa.</span>
+            </div>
           </Link>
         </div>
       </div>
