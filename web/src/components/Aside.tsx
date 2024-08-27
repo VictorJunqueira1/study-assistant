@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BookText, Calculator, Cpu, NotebookPen, Menu } from 'lucide-react';
+import { BookText, Calculator, Cpu, NotebookPen, Menu, CalendarDays } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
@@ -45,6 +45,12 @@ const Aside = () => {
                             </Link>
                         </li>
                         <li className='hover:scale-105 duration-300'>
+                            <Link href="/modules/routine" className={`flex items-center p-3 rounded-md transition-colors hover:bg-slate-700 ${pathname === '/modules/routine' ? 'bg-slate-800 text-white' : 'text-gray-300'}`}>
+                                <CalendarDays className="w-6 h-6 mr-3 text-indigo-500" />
+                                <span className="text-lg font-medium">Rotina</span>
+                            </Link>
+                        </li>
+                        <li className='hover:scale-105 duration-300'>
                             <Link href="/future-page" className={`flex items-center p-3 rounded-md transition-colors hover:bg-slate-700 ${pathname === '/future-page' ? 'bg-slate-800 text-white' : 'text-gray-300'}`}>
                                 <NotebookPen className="w-6 h-6 mr-3 text-yellow-500" />
                                 <span className="text-lg font-medium">Anotações</span>
@@ -62,7 +68,7 @@ const Aside = () => {
                 <SheetTrigger asChild>
                     <button
                         onClick={toggleSheet}
-                        className="lg:hidden p-4 fixed top-4 left-7 z-50"
+                        className="lg:hidden p-4 fixed top-2 left-2  z-50"
                     >
                         <Menu className="w-6 h-6" />
                     </button>
@@ -93,6 +99,12 @@ const Aside = () => {
                                 <Link href="/modules/english" className={`flex items-center p-3 rounded-md transition-colors hover:bg-slate-700 ${pathname === '/modules/english' ? 'bg-slate-800 text-white' : 'text-gray-300'}`}>
                                     <BookText className="w-6 h-6 mr-3 text-green-500" />
                                     <span className="text-lg font-medium">Inglês</span>
+                                </Link>
+                            </li>
+                            <li className='hover:scale-105 duration-300'>
+                                <Link href="/modules/routine" className={`flex items-center p-3 rounded-md transition-colors hover:bg-slate-700 ${pathname === '/modules/routine' ? 'bg-slate-800 text-white' : 'text-gray-300'}`}>
+                                    <CalendarDays className="w-6 h-6 mr-3 text-indigo-500" />
+                                    <span className="text-lg font-medium">Rotina</span>
                                 </Link>
                             </li>
                             <li className='hover:scale-105 duration-300'>

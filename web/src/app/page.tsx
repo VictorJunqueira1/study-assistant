@@ -40,54 +40,56 @@ const Home: React.FC = () => {
   }
 
   return (
-    <div className="bg-slate-950 text-white min-h-screen flex flex-col items-center justify-center p-4">
-      <div className="max-w-4xl w-full px-4 relative">
-        <h1 className="text-3xl md:text-5xl font-bold text-center mb-12 leading-tight">
-          Olá, Victor Junqueira!
-        </h1>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-          <Link
-            href="/modules/math"
-            className="relative flex flex-col items-center justify-center bg-gradient-to-br from-red-600 to-red-800 rounded-xl shadow-xl overflow-hidden transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl w-full h-48 md:h-64 group"
-          >
-            <div className="absolute top-1/2 transform -translate-y-1/2 flex items-center justify-center w-full h-full">
-              <Calculator className="h-16 w-16 text-white transition-transform transform group-hover:scale-125" />
-            </div>
-            <div className="absolute inset-0 bg-black bg-opacity-60 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 text-center">
-              <span className="text-xl md:text-2xl font-bold text-white">Matemática</span>
-              <span className="text-sm md:text-base text-white mt-2">Aprofunde seus conhecimentos em matemática.</span>
-            </div>
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
-          </Link>
-          <Link
-            href="/modules/prog"
-            className="relative flex flex-col items-center justify-center bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl shadow-xl overflow-hidden transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl w-full h-48 md:h-64 group"
-          >
-            <div className="absolute top-1/2 transform -translate-y-1/2 flex items-center justify-center w-full h-full">
-              <Cpu className="h-16 w-16 text-white transition-transform transform group-hover:scale-125" />
-            </div>
-            <div className="absolute inset-0 bg-black bg-opacity-60 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 text-center">
-              <span className="text-xl md:text-2xl font-bold text-white">Programação</span>
-              <span className="text-sm md:text-base text-white mt-2">Explore o mundo da programação e desenvolvimento.</span>
-            </div>
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
-          </Link>
-          <Link
-            href="/modules/english"
-            className="relative flex flex-col items-center justify-center bg-gradient-to-br from-green-600 to-green-800 rounded-xl shadow-xl overflow-hidden transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl w-full h-48 md:h-64 group"
-          >
-            <div className="absolute top-1/2 transform -translate-y-1/2 flex items-center justify-center w-full h-full">
-              <BookText className="h-16 w-16 text-white transition-transform transform group-hover:scale-125" />
-            </div>
-            <div className="absolute inset-0 bg-black bg-opacity-60 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 text-center">
-              <span className="text-xl md:text-2xl font-bold text-white">Inglês</span>
-              <span className="text-sm md:text-base text-white mt-2">Aprenda e pratique o inglês de forma interativa.</span>
-            </div>
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
-          </Link>
+    <>
+      <div className="bg-slate-950 text-white min-h-screen flex flex-col items-center justify-center p-4">
+        <div className="max-w-4xl w-full px-4 relative">
+          <h1 className="text-3xl md:text-5xl font-bold text-center mb-12 leading-tight">
+            Olá, Victor Junqueira!
+          </h1>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+            <Link
+              href="/modules/math"
+              className="relative flex flex-col items-center justify-center bg-gradient-to-br from-red-600 to-red-800 rounded-xl shadow-xl overflow-hidden transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl w-full h-48 md:h-64 group"
+            >
+              <div className="absolute top-1/2 transform -translate-y-1/2 flex items-center justify-center w-full h-full">
+                <Calculator className="h-16 w-16 text-white transition-transform transform group-hover:scale-125" />
+              </div>
+              <div className="absolute inset-0 bg-black bg-opacity-60 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 text-center">
+                <span className="text-xl md:text-2xl font-bold text-white">Matemática</span>
+                <span className="text-sm md:text-base text-white mt-2">Aprofunde seus conhecimentos em matemática.</span>
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
+            </Link>
+            <Link
+              href="/modules/prog"
+              className="relative flex flex-col items-center justify-center bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl shadow-xl overflow-hidden transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl w-full h-48 md:h-64 group"
+            >
+              <div className="absolute top-1/2 transform -translate-y-1/2 flex items-center justify-center w-full h-full">
+                <Cpu className="h-16 w-16 text-white transition-transform transform group-hover:scale-125" />
+              </div>
+              <div className="absolute inset-0 bg-black bg-opacity-60 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 text-center">
+                <span className="text-xl md:text-2xl font-bold text-white">Programação</span>
+                <span className="text-sm md:text-base text-white mt-2">Explore o mundo da programação e desenvolvimento.</span>
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
+            </Link>
+            <Link
+              href="/modules/english"
+              className="relative flex flex-col items-center justify-center bg-gradient-to-br from-green-600 to-green-800 rounded-xl shadow-xl overflow-hidden transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl w-full h-48 md:h-64 group"
+            >
+              <div className="absolute top-1/2 transform -translate-y-1/2 flex items-center justify-center w-full h-full">
+                <BookText className="h-16 w-16 text-white transition-transform transform group-hover:scale-125" />
+              </div>
+              <div className="absolute inset-0 bg-black bg-opacity-60 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 text-center">
+                <span className="text-xl md:text-2xl font-bold text-white">Inglês</span>
+                <span className="text-sm md:text-base text-white mt-2">Aprenda e pratique o inglês de forma interativa.</span>
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
+            </Link>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
