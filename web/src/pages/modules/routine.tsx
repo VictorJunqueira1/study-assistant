@@ -15,53 +15,7 @@ import {
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import Link from "next/link";
-
-// Definindo as atividades para cada dia da semana
-const days = {
-    "Domingo": [
-        "07h00 - 08h00: Academia",
-        "08h00 - 09h00: Inglês",
-        "09h00 - 11h00: Programação",
-        "Tarde: Tempo livre e com a namorada",
-        "19h30 - 20h30: Matemática"
-    ],
-    "Segunda-feira": [
-        "06h00 - 07h00: Academia",
-        "08h30 - 12h00: Trabalho",
-        "13h00 - 18h20: Escola",
-        "19h30 - 21h00: Programação"
-    ],
-    "Terça-feira": [
-        "08h30 - 12h00: Trabalho",
-        "13h00 - 18h20: Escola",
-        "19h30 - 20h30: Inglês",
-        "20h30 - 21h00: Matemática"
-    ],
-    "Quarta-feira": [
-        "06h00 - 07h00: Academia",
-        "08h30 - 12h00: Trabalho",
-        "13h00 - 18h20: Escola",
-        "19h30 - 21h00: Programação"
-    ],
-    "Quinta-feira": [
-        "08h30 - 12h00: Trabalho",
-        "13h00 - 18h20: Escola",
-        "19h30 - 20h30: Inglês",
-        "20h30 - 21h00: Matemática"
-    ],
-    "Sexta-feira": [
-        "06h00 - 07h00: Academia",
-        "08h30 - 12h00: Trabalho",
-        "13h00 - 18h20: Escola",
-        "19h30 - 21h00: Programação"
-    ],
-    "Sábado": [
-        "06h30 - 07h30: Programação",
-        "Manhã: Igreja",
-        "Tarde: Desbravadores",
-        "Noite: Tempo com a namorada"
-    ]
-};
+import { days } from "@/types/data/data.routine";
 
 const Routine = () => {
     const [selectedDay, setSelectedDay] = useState("");
