@@ -45,8 +45,7 @@ export const languagesRoadmap = [
     {
         level: 5 + ` - Extras`,
         subcategories: [
-            { category: 'Java', details: ['Spring', 'Kotlin'] },
-            { category: 'Outras Linguagens', details: ['Flutter'] }
+            { category: 'Golang', details: ['Gin', 'Beego'] }
         ]
     }
 ];

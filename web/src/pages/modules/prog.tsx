@@ -174,10 +174,10 @@ const Prog = () => {
               </div>
               <div className="bg-slate-900 p-6 rounded-xl shadow-lg">
                 <h2 className="text-2xl md:text-3xl font-semibold mb-4">Progresso</h2>
-                <Progress value={progressPercentage} className="w-full h-4 bg-gray-700 rounded-full">
+                <Progress value={progressPercentage} className="w-full h-4 bg-gray-700 rounded-full mb-2">
                   <div className="bg-blue-400 h-full rounded-full" style={{ width: `${progressPercentage}%` }}></div>
                 </Progress>
-                <div className="mt-2 text-white">{Math.round(progressPercentage)}% Completo</div>
+                {`${progressPercentage.toFixed(0)}% completo - (${checkedCheckboxes} de ${totalCheckboxes})`}
               </div>
             </div>
           </div>
