@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BookText, Calculator, Cpu, NotebookPen, Menu, CalendarDays, GraduationCap } from 'lucide-react';
+import { BookText, Calculator, Cpu, NotebookPen, Menu, CalendarDays } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
@@ -16,7 +16,7 @@ const Aside = () => {
         <>
             {/* Desktop Sidebar */}
             <aside className="hidden lg:flex lg:w-64 lg:bg-slate-900 lg:p-6 lg:shadow-lg lg:rounded-lg lg:flex-col lg:fixed lg:left-0 lg:top-0 lg:h-full z-30">
-                <h2 className="text-2xl font-bold mb-6">Menu</h2>
+                <h2 className="text-2xl font-bold mb-6 text-center">Study Assistant</h2>
                 <nav>
                     <ul className="space-y-4">
                         <li className='hover:scale-105 duration-300'>
@@ -35,12 +35,6 @@ const Aside = () => {
                             <Link href="/modules/english" className={`flex items-center p-3 rounded-md transition-colors hover:bg-slate-700 ${pathname === '/modules/english' ? 'bg-slate-800 text-white' : 'text-gray-300'}`}>
                                 <BookText className="w-6 h-6 mr-3 text-green-500" />
                                 <span className="text-lg font-medium">Inglês</span>
-                            </Link>
-                        </li>
-                        <li className='hover:scale-105 duration-300'>
-                            <Link href="/modules/enem" className={`flex items-center p-3 rounded-md transition-colors hover:bg-slate-700 ${pathname === '/modules/enem' ? 'bg-slate-800 text-white' : 'text-gray-300'}`}>
-                                <GraduationCap className="w-6 h-6 mr-3 text-orange-500" />
-                                <span className="text-lg font-medium">Enem</span>
                             </Link>
                         </li>
                         <li className='hover:scale-105 duration-300'>
@@ -92,12 +86,6 @@ const Aside = () => {
                                 <Link href="/modules/english" className={`flex items-center p-3 rounded-md transition-colors hover:bg-slate-700 ${pathname === '/modules/english' ? 'bg-slate-800 text-white' : 'text-gray-300'}`}>
                                     <BookText className="w-6 h-6 mr-3 text-green-500" />
                                     <span className="text-lg font-medium">Inglês</span>
-                                </Link>
-                            </li>
-                            <li className='hover:scale-105 duration-300'>
-                                <Link href="/modules/enem" className={`flex items-center p-3 rounded-md transition-colors hover:bg-slate-700 ${pathname === '/modules/enem' ? 'bg-slate-800 text-white' : 'text-gray-300'}`}>
-                                    <GraduationCap className="w-6 h-6 mr-3 text-orange-500" />
-                                    <span className="text-lg font-medium">Enem</span>
                                 </Link>
                             </li>
                             <li className='hover:scale-105 duration-300'>
