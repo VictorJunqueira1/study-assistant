@@ -1,114 +1,155 @@
-import React, { useState } from 'react';
-import { BookText, Calculator, Cpu, NotebookPen, Menu, CalendarDays } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import {
+    Home,
+    ChevronLeft,
+    ChevronRight,
+    ChevronDown,
+    ChevronUp,
+    Calculator,
+    Cpu,
+    BookMarkedIcon,
+    NotebookPen,
+    CalendarFold,
+} from 'lucide-react';
 
-const Aside = () => {
-    const pathname = usePathname();
-    const [isSheetOpen, setIsSheetOpen] = useState(false);
+interface MenuItem {
+    label: string;
+    href: string;
+    icon?: React.ReactNode;
+    subItems?: MenuItem[];
+}
 
-    const toggleSheet = () => {
-        setIsSheetOpen(!isSheetOpen);
+interface SidebarProps {
+    children: React.ReactNode;
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ children }) => {
+    const [isOpen, setIsOpen] = useState(true);
+    const [openSubMenu, setOpenSubMenu] = useState<string | null>(null);
+
+    const menuItems: MenuItem[] = [
+        { label: 'Home', icon: <Home size={24} className='text-blue-500' />, href: '/' },
+        { label: 'Matemática', icon: <Calculator size={24} className='text-blue-500' />, href: '/modules/math' },
+        { label: 'Programação', icon: <Cpu size={24} className='text-blue-500' />, href: '/modules/prog' },
+        { label: 'Inglês', icon: <BookMarkedIcon size={24} className='text-blue-500' />, href: '/modules/english' },
+        { label: 'Rotina', icon: <CalendarFold size={24} className='text-blue-500' />, href: '/modules/routine' },
+        { label: 'Anotações', icon: <NotebookPen size={24} className='text-blue-500' />, href: '/anotations' },
+    ];
+
+    const updateSidebarState = () => {
+        const width = window.innerWidth;
+        if (width < 1024) {
+            setIsOpen(false);
+        } else {
+            setIsOpen(true);
+        }
+    };
+
+    useEffect(() => {
+        updateSidebarState();
+        window.addEventListener('resize', updateSidebarState);
+
+        return () => {
+            window.removeEventListener('resize', updateSidebarState);
+        };
+    }, []);
+
+    const toggleSidebar = () => {
+        setIsOpen((prev) => {
+            const newState = !prev;
+            if (!newState) {
+                setOpenSubMenu(null);
+            }
+            return newState;
+        });
+    };
+
+    const toggleSubMenu = (menu: string) => {
+        if (!isOpen) {
+            setIsOpen(true);
+        }
+        setOpenSubMenu(openSubMenu === menu ? null : menu);
     };
 
     return (
-        <>
-            {/* Desktop Sidebar */}
-            <aside className="hidden lg:flex lg:w-64 lg:bg-slate-900 lg:p-6 lg:shadow-lg lg:rounded-lg lg:flex-col lg:fixed lg:left-0 lg:top-0 lg:h-full z-30">
-                <h2 className="text-2xl font-bold mb-6 text-center">Study Assistant</h2>
-                <nav>
-                    <ul className="space-y-4">
-                        <li className='hover:scale-105 duration-300'>
-                            <Link href="/modules/math" className={`flex items-center p-3 rounded-md transition-colors hover:bg-slate-700 ${pathname === '/modules/math' ? 'bg-slate-800 text-white' : 'text-gray-300'}`}>
-                                <Calculator className="w-6 h-6 mr-3 text-red-500" />
-                                <span className="text-lg font-medium">Matemática</span>
-                            </Link>
-                        </li>
-                        <li className='hover:scale-105 duration-300'>
-                            <Link href="/modules/prog" className={`flex items-center p-3 rounded-md transition-colors hover:bg-slate-700 ${pathname === '/modules/prog' ? 'bg-slate-800 text-white' : 'text-gray-300'}`}>
-                                <Cpu className="w-6 h-6 mr-3 text-blue-500" />
-                                <span className="text-lg font-medium">Programação</span>
-                            </Link>
-                        </li>
-                        <li className='hover:scale-105 duration-300'>
-                            <Link href="/modules/english" className={`flex items-center p-3 rounded-md transition-colors hover:bg-slate-700 ${pathname === '/modules/english' ? 'bg-slate-800 text-white' : 'text-gray-300'}`}>
-                                <BookText className="w-6 h-6 mr-3 text-green-500" />
-                                <span className="text-lg font-medium">Inglês</span>
-                            </Link>
-                        </li>
-                        <li className='hover:scale-105 duration-300'>
-                            <Link href="/modules/routine" className={`flex items-center p-3 rounded-md transition-colors hover:bg-slate-700 ${pathname === '/modules/routine' ? 'bg-slate-800 text-white' : 'text-gray-300'}`}>
-                                <CalendarDays className="w-6 h-6 mr-3 text-indigo-500" />
-                                <span className="text-lg font-medium">Rotina</span>
-                            </Link>
-                        </li>
-                        <li className='hover:scale-105 duration-300'>
-                            <Link href="/future-page" className={`flex items-center p-3 rounded-md transition-colors hover:bg-slate-700 ${pathname === '/future-page' ? 'bg-slate-800 text-white' : 'text-gray-300'}`}>
-                                <NotebookPen className="w-6 h-6 mr-3 text-yellow-500" />
-                                <span className="text-lg font-medium">Anotações</span>
-                            </Link>
-                        </li>
-                    </ul>
-                </nav>
-                <div className="mt-auto text-gray-500 text-sm text-center">
-                    <p>© 2024 Study Assistant. Todos os direitos reservados.</p>
-                </div>
-            </aside>
+        <div className="flex">
+            <nav
+                className={`bg-slate-900 ${isOpen ? 'w-screen fixed md:w-[250px]' : 'w-[80px]'} min-h-screen transition-all duration-300 shrink-0`}
+            >
+                <ul className="list-none p-4 h-screen">
+                    <li className="flex justify-between items-center mb-4">
+                        <span
+                            className={`${isOpen ? 'font-semibold' : 'hidden'} text-white text-lg ml-4`}
+                        >
+                            Study Assistant
+                        </span>
+                        <button onClick={toggleSidebar} id="toggle-btn">
+                            {isOpen ? (
+                                <ChevronLeft size={24} className="text-white" />
+                            ) : (
+                                <ChevronRight size={24} className="text-white ml-3" />
+                            )}
+                        </button>
+                    </li>
 
-            {/* Mobile Menu */}
-            <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
-                <SheetTrigger asChild>
-                    <button
-                        onClick={toggleSheet}
-                        className="lg:hidden p-4 fixed top-2 left-2  z-50"
-                    >
-                        <Menu className="w-6 h-6" />
-                    </button>
-                </SheetTrigger>
-                <SheetContent side="left" className="w-64 bg-slate-900 p-6 shadow-lg rounded-lg transition-transform duration-300 flex flex-col justify-between">
-                    <h2 className="text-2xl font-bold mb-6 text-white">Menu</h2>
-                    <nav>
-                        <ul className="space-y-4">
-                            <li className='hover:scale-105 duration-300'>
-                                <Link href="/modules/math" className={`flex items-center p-3 rounded-md transition-colors hover:bg-slate-700 ${pathname === '/modules/math' ? 'bg-slate-800 text-white' : 'text-gray-300'}`}>
-                                    <Calculator className="w-6 h-6 mr-3 text-red-500" />
-                                    <span className="text-lg font-medium">Matemática</span>
+                    {menuItems.map((item, index) => (
+                        <li key={index} className="mb-4">
+                            {item.subItems ? (
+                                <>
+                                    <button
+                                        onClick={() => toggleSubMenu(item.label)}
+                                        className="flex items-center justify-between gap-4 p-3 rounded hover:bg-gray-800 w-full text-left"
+                                    >
+                                        <div className="flex items-center gap-4">
+                                            {item.icon}
+                                            <span
+                                                className={`${isOpen ? 'block' : 'hidden'} text-gray-200`}
+                                            >
+                                                {item.label}
+                                            </span>
+                                        </div>
+                                        {isOpen &&
+                                            (openSubMenu === item.label ? (
+                                                <ChevronUp size={20} className="text-white" />
+                                            ) : (
+                                                <ChevronDown size={20} className="text-white" />
+                                            ))}
+                                    </button>
+                                    <ul
+                                        className={`pl-8 transition-all ${openSubMenu === item.label ? 'block' : 'hidden'}`}
+                                    >
+                                        {item.subItems.map((subItem, subIndex) => (
+                                            <li key={subIndex}>
+                                                <Link
+                                                    href={subItem.href}
+                                                    className="block py-4 px-4 hover:bg-gray-800 rounded text-gray-200"
+                                                >
+                                                    {subItem.label}
+                                                </Link>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </>
+                            ) : (
+                                <Link href={item.href}>
+                                    <p className="flex items-center gap-4 p-3 rounded hover:bg-gray-800">
+                                        {item.icon}
+                                        <span
+                                            className={`${isOpen ? 'block' : 'hidden'} text-gray-200`}
+                                        >
+                                            {item.label}
+                                        </span>
+                                    </p>
                                 </Link>
-                            </li>
-                            <li className='hover:scale-105 duration-300'>
-                                <Link href="/modules/prog" className={`flex items-center p-3 rounded-md transition-colors hover:bg-slate-700 ${pathname === '/modules/prog' ? 'bg-slate-800 text-white' : 'text-gray-300'}`}>
-                                    <Cpu className="w-6 h-6 mr-3 text-blue-500" />
-                                    <span className="text-lg font-medium">Programação</span>
-                                </Link>
-                            </li>
-                            <li className='hover:scale-105 duration-300'>
-                                <Link href="/modules/english" className={`flex items-center p-3 rounded-md transition-colors hover:bg-slate-700 ${pathname === '/modules/english' ? 'bg-slate-800 text-white' : 'text-gray-300'}`}>
-                                    <BookText className="w-6 h-6 mr-3 text-green-500" />
-                                    <span className="text-lg font-medium">Inglês</span>
-                                </Link>
-                            </li>
-                            <li className='hover:scale-105 duration-300'>
-                                <Link href="/modules/routine" className={`flex items-center p-3 rounded-md transition-colors hover:bg-slate-700 ${pathname === '/modules/routine' ? 'bg-slate-800 text-white' : 'text-gray-300'}`}>
-                                    <CalendarDays className="w-6 h-6 mr-3 text-indigo-500" />
-                                    <span className="text-lg font-medium">Rotina</span>
-                                </Link>
-                            </li>
-                            <li className='hover:scale-105 duration-300'>
-                                <Link href="/future-page" className={`flex items-center p-3 rounded-md transition-colors hover:bg-slate-700 ${pathname === '/future-page' ? 'bg-slate-800 text-white' : 'text-gray-300'}`}>
-                                    <NotebookPen className="w-6 h-6 mr-3 text-yellow-500" />
-                                    <span className="text-lg font-medium">Anotações</span>
-                                </Link>
-                            </li>
-                        </ul>
-                    </nav>
-                    <div className="mt-auto text-gray-500 text-sm text-center">
-                        <p>© 2024 Study Assistant. Todos os direitos reservados.</p>
-                    </div>
-                </SheetContent>
-            </Sheet>
-        </>
+                            )}
+                        </li>
+                    ))}
+                </ul>
+            </nav>
+            <main className={`${isOpen ? 'pl-60' : 'pl-0'} flex-grow overflow-auto`}>{children}</main>
+        </div>
     );
 };
 
-export default Aside;
+export default Sidebar;

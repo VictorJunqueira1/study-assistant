@@ -6,7 +6,7 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbS
 import { topics, courses } from '@/types/data/data.english';
 import { database } from '@/lib/firebase';
 import { ref, onValue, set } from 'firebase/database';
-import Sidebar from '@/components/Aside';
+import Aside from '@/components/Aside';
 import { Progress } from "@/components/ui/progress";
 
 const English = () => {
@@ -97,68 +97,69 @@ const English = () => {
 
   return (
     <>
-      <div className="flex min-h-screen bg-slate-950 text-white flex-1 p-6 lg:pl-64">
-        <Sidebar />
-        <main className="flex-1 p-6">
-          <div className='mx-auto max-w-7xl'>
-            <div className="flex items-center justify-between mb-8">
-              <Breadcrumb className='mt-6'>
-                <BreadcrumbList className='text-2xl md:text-3xl text-white items-center flex text-center'>
-                  <BreadcrumbItem>
-                    <BreadcrumbLink asChild>
-                      <Link href="/" className='text-2xl font-light'>Início</Link>
-                    </BreadcrumbLink>
-                  </BreadcrumbItem>
-                  <BreadcrumbSeparator />
-                  <BreadcrumbItem>
-                    <BreadcrumbLink asChild>
-                      <Link href={"/modules/english"}>Inglês</Link>
-                    </BreadcrumbLink>
-                  </BreadcrumbItem>
-                </BreadcrumbList>
-              </Breadcrumb>
+      <Aside>
+        <div className="flex min-h-screen bg-slate-950 text-white flex-1 p-6">
+          <main className="flex-1 p-6">
+            <div className='mx-auto max-w-7xl'>
+              <div className="flex items-center justify-between mb-8">
+                <Breadcrumb className='mt-6'>
+                  <BreadcrumbList className='text-2xl md:text-3xl text-white items-center flex text-center'>
+                    <BreadcrumbItem>
+                      <BreadcrumbLink asChild>
+                        <Link href="/" className='text-2xl font-light'>Início</Link>
+                      </BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator />
+                    <BreadcrumbItem>
+                      <BreadcrumbLink asChild>
+                        <Link href={"/modules/english"}>Inglês</Link>
+                      </BreadcrumbLink>
+                    </BreadcrumbItem>
+                  </BreadcrumbList>
+                </Breadcrumb>
+              </div>
+              <div className="grid grid-cols-1 gap-6">
+                <div className="bg-slate-900 p-6 rounded-xl shadow-lg">
+                  <h2 className="text-xl md:text-3xl font-semibold mb-4">Tópicos de Inglês</h2>
+                  <Accordion type="single" collapsible>
+                    {topics.map((topic, index) => (
+                      <AccordionItem key={index} value={`topic-${index}`}>
+                        <AccordionTrigger className="text-lg md:text-2xl font-semibold cursor-pointer">
+                          {topic.category}
+                        </AccordionTrigger>
+                        <AccordionContent>
+                          <ul className="mt-2 list-disc list-inside space-y-2">
+                            {renderCheckboxes(topic.details, topic.category)}
+                          </ul>
+                        </AccordionContent>
+                      </AccordionItem>
+                    ))}
+                  </Accordion>
+                </div>
+                <div className="bg-slate-900 p-6 rounded-xl shadow-lg">
+                  <h2 className="text-2xl md:text-3xl font-semibold mb-4">Links</h2>
+                  <ul className="list-disc list-inside space-y-2">
+                    {courses.map((course, index) => (
+                      <li key={index}>
+                        <a href={course.link} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">
+                          {course.name}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="bg-slate-900 p-6 rounded-xl shadow-lg">
+                  <h2 className="text-2xl md:text-3xl font-semibold mb-4">Progresso</h2>
+                  <Progress value={progressPercentage} className="w-full h-4 bg-gray-700 rounded-full mb-2">
+                    <div className="bg-blue-400 h-full rounded-full" style={{ width: `${progressPercentage}%` }}></div>
+                  </Progress>
+                  {`${progressPercentage.toFixed(0)}% completo - (${checkedCheckboxes} de ${totalCheckboxes})`}
+                </div>
+              </div>
             </div>
-            <div className="grid grid-cols-1 gap-6">
-              <div className="bg-slate-900 p-6 rounded-xl shadow-lg">
-                <h2 className="text-xl md:text-3xl font-semibold mb-4">Tópicos de Inglês</h2>
-                <Accordion type="single" collapsible>
-                  {topics.map((topic, index) => (
-                    <AccordionItem key={index} value={`topic-${index}`}>
-                      <AccordionTrigger className="text-lg md:text-2xl font-semibold cursor-pointer">
-                        {topic.category}
-                      </AccordionTrigger>
-                      <AccordionContent>
-                        <ul className="mt-2 list-disc list-inside space-y-2">
-                          {renderCheckboxes(topic.details, topic.category)}
-                        </ul>
-                      </AccordionContent>
-                    </AccordionItem>
-                  ))}
-                </Accordion>
-              </div>
-              <div className="bg-slate-900 p-6 rounded-xl shadow-lg">
-                <h2 className="text-2xl md:text-3xl font-semibold mb-4">Links</h2>
-                <ul className="list-disc list-inside space-y-2">
-                  {courses.map((course, index) => (
-                    <li key={index}>
-                      <a href={course.link} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">
-                        {course.name}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="bg-slate-900 p-6 rounded-xl shadow-lg">
-                <h2 className="text-2xl md:text-3xl font-semibold mb-4">Progresso</h2>
-                <Progress value={progressPercentage} className="w-full h-4 bg-gray-700 rounded-full mb-2">
-                  <div className="bg-blue-400 h-full rounded-full" style={{ width: `${progressPercentage}%` }}></div>
-                </Progress>
-                {`${progressPercentage.toFixed(0)}% completo - (${checkedCheckboxes} de ${totalCheckboxes})`}
-              </div>
-            </div>
-          </div>
-        </main>
-      </div>
+          </main>
+        </div>
+      </Aside>
     </>
   );
 };
