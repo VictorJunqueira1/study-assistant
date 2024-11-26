@@ -51,7 +51,6 @@ const Mathematic = () => {
   };
 
   const renderCheckboxes = (details: string[], category: string) => {
-    console.log('Rendering Checkboxes for Category:', category, details);
     return details.map((item, i) => (
       <li key={i} className="flex items-center space-x-2 ml-4">
         <input
