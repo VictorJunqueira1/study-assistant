@@ -14,7 +14,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 const Routine = () => {
     const [currentTime, setCurrentTime] = useState(new Date())
-    const currentDay = format(currentTime, "EEEE", { locale: ptBR })
+    const currentDay = format(currentTime, "EEEE")
     const formattedTime = format(currentTime, "HH:mm")
 
     const capitalizeFirstLetter = (string: string) => {
