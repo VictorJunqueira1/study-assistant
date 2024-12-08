@@ -1,8 +1,8 @@
 export const courses = [
-    {name: 'B7WEB', link: 'https://alunos.b7web.com.br'},
     {name: 'Curso em Vídeo', link: 'https://www.cursoemvideo.com/meus-cursos/'},
+    {name: 'B7web', link: 'https://alunos.b7web.com.br'},
     {name: 'Udemy', link: 'https://www.udemy.com/home/my-courses/learning/'},
-    {name: 'FIAP', link: 'https://on.fiap.com.br/local/nanocourses/index.php'},
+    {name: 'Balta.io', link: 'https://balta.io/player/assistir/5ef614da-366d-6156-d049-694800000000'},
 ];
 
 export const topics = [

@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import {
@@ -11,6 +13,7 @@ import {
     BookMarkedIcon,
     NotebookPen,
     CalendarFold,
+    LayoutGrid
 } from 'lucide-react';
 
 interface MenuItem {
@@ -20,13 +23,15 @@ interface MenuItem {
     subItems?: MenuItem[];
 }
 
-interface SidebarProps {
+interface AsideProps {
     children: React.ReactNode;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ children }) => {
+const Aside: React.FC<AsideProps> = ({ children }) => {
     const [isOpen, setIsOpen] = useState(true);
     const [openSubMenu, setOpenSubMenu] = useState<string | null>(null);
+    const [isMobile, setIsMobile] = useState(false);
+    const [mobileOpenSubMenu, setMobileOpenSubMenu] = useState<string | null>(null);
 
     const menuItems: MenuItem[] = [
         { label: 'Home', icon: <Home size={24} className='text-blue-500' />, href: '/' },
@@ -37,8 +42,23 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
         { label: 'Anotações', icon: <NotebookPen size={24} className='text-blue-500' />, href: '/anotations' },
     ];
 
+    const mobileNavItems = [
+        { label: 'Home', icon: <Home size={24} className='text-blue-500' />, href: '/' },
+        { label: 'Rotina', icon: <CalendarFold size={24} className='text-blue-500' />, href: '/modules/routine' },
+        {
+            label: 'Módulos',
+            icon: <LayoutGrid size={24} className='text-blue-500' />,
+            subItems: [
+                { label: 'Matemática', icon: <Calculator size={24} className='text-blue-500' />, href: '/modules/math' },
+                { label: 'Programação', icon: <Cpu size={24} className='text-blue-500' />, href: '/modules/prog' },
+                { label: 'Inglês', icon: <BookMarkedIcon size={24} className='text-blue-500' />, href: '/modules/english' },
+            ]
+        },
+    ];
+
     const updateSidebarState = () => {
         const width = window.innerWidth;
+        setIsMobile(width < 768);
         if (width < 1024) {
             setIsOpen(false);
         } else {
@@ -48,12 +68,28 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
 
     useEffect(() => {
         updateSidebarState();
-        window.addEventListener('resize', updateSidebarState);
+        window.addEventListener('resize', () => {
+            updateSidebarState();
+            setMobileOpenSubMenu(null);
+        });
 
         return () => {
             window.removeEventListener('resize', updateSidebarState);
         };
     }, []);
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (mobileOpenSubMenu && !(event.target as Element).closest('.mobile-submenu')) {
+                setMobileOpenSubMenu(null);
+            }
+        };
+
+        document.addEventListener('click', handleClickOutside);
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, [mobileOpenSubMenu]);
 
     const toggleSidebar = () => {
         setIsOpen((prev) => {
@@ -72,12 +108,19 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
         setOpenSubMenu(openSubMenu === menu ? null : menu);
     };
 
+    const toggleMobileSubMenu = (menu: string) => {
+        setMobileOpenSubMenu(prevMenu => prevMenu === menu ? null : menu);
+    };
+
     return (
-        <div className="flex">
+        <div className="flex min-h-screen relative">
+            {/* Sidebar for desktop */}
             <nav
-                className={`bg-slate-900 ${isOpen ? 'w-screen fixed md:w-[250px]' : 'w-[80px]'} min-h-screen transition-all duration-300 shrink-0`}
+                className={`bg-slate-900 ${isOpen ? 'w-screen fixed md:w-[250px] md:relative' : 'w-[80px]'
+                    } min-h-screen transition-all duration-300 shrink-0 z-50 md:block ${isMobile && !isOpen ? 'hidden' : ''
+                    }`}
             >
-                <ul className="list-none p-4 h-screen">
+                <ul className="list-none p-4 h-screen overflow-y-auto">
                     <li className="flex justify-between items-center mb-4">
                         <span
                             className={`${isOpen ? 'font-semibold' : 'hidden'} text-white text-lg ml-4`}
@@ -147,9 +190,59 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
                     ))}
                 </ul>
             </nav>
-            <main className={`${isOpen ? 'pl-60' : 'pl-0'} flex-grow overflow-auto`}>{children}</main>
+
+            {/* Main content */}
+            <main className={`${isOpen ? 'md:pl-0' : 'pl-0'} flex-grow overflow-auto pb-20 md:pb-0`}>
+                {children}
+            </main>
+
+            {/* Mobile bottom navigation */}
+            {isMobile && (
+                <nav className="fixed bottom-0 left-0 right-0 bg-slate-900 border-t border-blue-600 z-50">
+                    <div className="flex justify-around items-center h-16">
+                        {mobileNavItems.map((item, index) => (
+                            <div key={index} className="relative group">
+                                {item.subItems ? (
+                                    <>
+                                        <button
+                                            onClick={() => toggleMobileSubMenu(item.label)}
+                                            className="flex flex-col items-center justify-center w-full h-full text-white hover:text-blue-500"
+                                        >
+                                            {item.icon}
+                                            <span className="text-xs mt-1">{item.label}</span>
+                                        </button>
+                                        {mobileOpenSubMenu === item.label && (
+                                            <div className="mobile-submenu absolute bottom-full left-1/2 transform -translate-x-1/2 w-64 bg-slate-800 rounded-t-lg shadow-lg">
+                                                {item.subItems.map((subItem, subIndex) => (
+                                                    <Link
+                                                        key={subIndex}
+                                                        href={subItem.href}
+                                                        className="flex items-center px-4 py-3 text-white hover:bg-slate-700"
+                                                        onClick={() => setMobileOpenSubMenu(null)}
+                                                    >
+                                                        {subItem.icon}
+                                                        <span className="ml-2">{subItem.label}</span>
+                                                    </Link>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </>
+                                ) : (
+                                    <Link
+                                        href={item.href}
+                                        className="flex flex-col items-center justify-center w-full h-full text-white hover:text-blue-500"
+                                    >
+                                        {item.icon}
+                                        <span className="text-xs mt-1">{item.label}</span>
+                                    </Link>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                </nav>
+            )}
         </div>
     );
 };
 
-export default Sidebar;
+export default Aside;
